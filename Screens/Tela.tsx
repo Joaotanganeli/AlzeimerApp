@@ -1,16 +1,39 @@
 import { useEffect, useState } from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, Image, Text, View } from 'react-native';
-import dayjs from 'dayjs';
+import { Calendar, LocaleConfig, Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
+import Schedule from './Schedule'
+
+LocaleConfig.locales['pt'] = {
+  monthNames: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro'
+  ],
+  monthNamesShort: ['Jan.', 'Fev.', 'Mar.', 'Abr.', 'Mai.', 'Jun.', 'Jul.', 'Ago.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'],
+  dayNames: ['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sabado'],
+  dayNamesShort: ['Dom.', 'Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sab.'],
+};
+LocaleConfig.defaultLocale = 'pt';
+
+// export default Schedule
 
 export function Tela() {
+
   return (
     <>
-      <View style={styles.topContainer}>
-        <Text>sexo sexo sexo sem parar</Text>
-      </View>
+      <Schedule></Schedule>
     </>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
