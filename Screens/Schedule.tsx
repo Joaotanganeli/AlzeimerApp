@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity } from 'react-native'
-import { Text } from "@rneui/themed";
+import { View, TouchableOpacity, Text } from 'react-native'
 import { Agenda, DateData } from "react-native-calendars";
 import { Card } from "react-native-paper";
 
@@ -59,8 +58,16 @@ const ScheduleScreen: React.FC = () => {
     return (
         <View style={{ flex: 2 }}>
             <Agenda
-                items={items}
-                loadItemsForMonth={loadItems}
+                items={{
+                    '2023-05-04': [{name: 'item 1 - any js object'}],
+                    '2023-05-05': [{name: 'item 2 - any js object', height: 80}],
+                    '2023-05-06': [],
+                    '2023-05-08': [{name: 'item 3 - any js object'}, {name: 'any js object'}]
+                  }}
+                loadItemsForMonth={month => {
+                console.log('trigger items loading');
+                }}
+                // loadItemsForMonth={loadItems}
                 selected={'2023-05-07'}
                 renderItem={renderItem}
             />

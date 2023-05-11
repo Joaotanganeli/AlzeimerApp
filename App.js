@@ -5,8 +5,9 @@ import { StyleSheet, Button, Image, Text, View, TouchableOpacity } from 'react-n
 import dayjs from 'dayjs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import PerfilImage from '../AlzeimerApp/Components/PerfilImage'
 import { Tela } from './Screens/Tela';
+import { Checklist } from './Screens/ChecklistScreen';
+import { Alarm } from './Screens/Alarms';
 
 export default function App() {
 
@@ -52,19 +53,19 @@ export default function App() {
         <View style={styles.container}>
           <View style={styles.row}>
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Tela')}>
-                <Text style={styles.title}>Medicamentos</Text>
+              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Checklist')}>
+                <Text style={styles.title}>Cheklist</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.buttonsContainer}>
               <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Tela')}>
-                <Text style={styles.title}>Agenda</Text>
+                <Text style={styles.title}>Compromissos</Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.row}>
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Tela')}>
+              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Alarm')}>
                 <Text style={styles.title}>Alarmes</Text>
               </TouchableOpacity>
             </View>
@@ -88,50 +89,14 @@ export default function App() {
     )
   }
 
-  // function Medicamentos({ navigation }) {
-  //   return (
-  //     <View style={styles.buttonsContainer}>
-  //       <Button title="Medicamentos" onPress={() => navigation.navigate('Tela')} />
-  //     </View>
-  //   )
-  // }
-  // function Agenda({ navigation }) {
-  //   return (
-
-  //     <View style={styles.buttonsContainer}>
-  //       <DefaultButton title="Agenda" destination="a" />
-  //     </View>
-  //   )
-  // }
-  // function Alarmes({ navigation }) {
-  //   return (
-  //     <View style={styles.buttonsContainer}>
-  //       <DefaultButton title="Alarmes" destination="a" />
-  //     </View>
-  //   )
-  // }
-  // function Contatos({ navigation }) {
-  //   return (
-  //     <View style={styles.buttonsContainer}>
-  //       <DefaultButton title="Contatos" destination="a" />
-  //     </View>
-  //   )
-  // }
-  // function Emergencia({ navigation }) {
-  //   return (
-  //     <View style={styles.buttonsContainer}>
-  //       <DefaultButton title="Emergencia" destination="a"></DefaultButton>
-  //     </View>
-  //   )
-  // }
-
-
   return (
     <>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="HomeScreen" component={HomeScreen}></Stack.Screen>
           <Stack.Screen name="Tela" component={Tela}></Stack.Screen>
+          <Stack.Screen name="Checklist" component={Checklist}></Stack.Screen>
+          <Stack.Screen name="Alarm" component={Alarm}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>
@@ -151,6 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     paddingTop: 40,
+    paddingBottom: 40,
   },
 
   buttonsContainer: {
@@ -198,7 +164,7 @@ const styles = StyleSheet.create({
     borderRadius: 100 / 2,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 0,
+    marginTop: 10,
   },
 
   title: {

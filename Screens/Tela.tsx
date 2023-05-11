@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, Image, Text, View } from 'react-native';
-import { Calendar, LocaleConfig, Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
+import { LocaleConfig} from 'react-native-calendars';
 import Schedule from './Schedule'
 
 LocaleConfig.locales['pt'] = {
