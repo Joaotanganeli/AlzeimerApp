@@ -1,0 +1,34 @@
+{
+  "alarms": [
+    {
+      "id": 1,
+      "Description": "Remedio x",
+      "date": "05/14/2023 12:00:00",
+      "repeatable": "no"
+    },
+    {
+      "id": 2,
+      "Description": "Remedio y",
+      "date": "05/15/2023 12:00:00",
+      "repeatable": "no"
+    },
+    {
+      "id": 3,
+      "Description": "Remedio z",
+      "date": "05/16/2023 12:00:00",
+      "repeatable": "no"
+    },
+    {
+      "Description": "Remedio i",
+      "date": "05/17/2023 12:00:00",
+      "repeatable": "no",
+      "id": 4
+    },
+    {
+      "Description": "aaaaaa",
+      "date": "2023-05-19T19:41:47.390Z",
+      "repeatable": false,
+      "id": 5
+    }
+  ]
+}

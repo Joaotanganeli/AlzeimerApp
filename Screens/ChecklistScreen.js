@@ -122,17 +122,7 @@ export function Checklist(){
                 flex: 1,
                 backgroundColor: 'white',
             }}>
-            <View style={styles.header}>
-                <Text
-                    style={{
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                        color: COLORS.primary,
-                    }}>
-                    TODO APP
-                </Text>
-                <Icon name="delete" size={25} color="red" onPress={clearAllTodos} />
-            </View>
+           
             <FlatList
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
@@ -151,6 +141,11 @@ export function Checklist(){
                 <TouchableOpacity onPress={addTodo}>
                     <View style={styles.iconContainer}>
                         <Icon name="add" color="white" size={30} />
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={addTodo}>
+                    <View style={styles.iconContainer}>
+                    <Icon name="delete" size={30} color="white" onPress={clearAllTodos} />
                     </View>
                 </TouchableOpacity>
             </View>

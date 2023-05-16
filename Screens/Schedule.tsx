@@ -1,78 +1,105 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, Text } from 'react-native'
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { Agenda, DateData } from "react-native-calendars";
-import { Card } from "react-native-paper";
+import { format } from 'date-fns';
 
 const timeToString = (time: number) => {
     const date = new Date(time);
     return date.toISOString().split('T')[0];
 }
 
+type Item = {
+    Description: string,
+    alarmDate: Date
+}
+
+type Post = {
+    id: number,
+    Description: string,
+    alarmDate: Date,
+    repeatable: boolean
+};
+
 const ScheduleScreen: React.FC = () => {
-    const [items, setItems] = useState({});
+    const [items, setItems] = useState<{ [key: string]: Post[] }>({});
 
-    const loadItems = (day: DateData) => {
-        setTimeout(() => {
-            for (let i = -15; i < 85; i++) {
-                const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-                const strTime = timeToString(time);
+    useEffect(() => {
 
-                if (!items[strTime]) {
-                    items[strTime] = [];
+        const getData = async () => {
+            const response = await fetch(
+                'https://ab3a-189-29-145-23.ngrok.io/alarms',
+            );
 
-                    const numItems = Math.floor(Math.random() * 3 + 1);
-                    for (let j = 0; j < numItems; j++) {
-                        items[strTime].push({
-                            name: 'Item for ' + strTime + ' #' + j,
-                            height: Math.max(50, Math.floor(Math.random() * 150)),
-                            day: strTime
-                        });
-                    }
+            const data: Post[] = await response.json();
+
+            const mappedData = data.map((post) => {
+
+                const date = new Date(post.alarmDate);
+
+                return {
+                    ...post,
+                    date: format(date, 'yyyy-MM-dd'),
                 }
-            }
-
-            const newItems = {};
-            Object.keys(items).forEach(key => {
-                newItems[key] = items[key];
             });
-            setItems(newItems);
-        }, 1000);
-    }
 
-    const renderItem = (item) => {
-        return (<TouchableOpacity style={{marginRight: 10, marginBottom: 10, marginTop: 10}}>
-            <Card>
-                <Card.Content>
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}>
-                        <Text>{item.name}</Text>
-                    </View>
-                </Card.Content>
-            </Card>
-        </TouchableOpacity>)
+            // const reduced = mappedData.reduce(
+            //     (acc: { [key: string]: Post[] }, currentItem) => {
+            //         const { date, ...coolItem } = currentItem;
+
+            //         acc[date] = [coolItem];
+            //         console.log(acc);
+            //         return acc;
+            //     },
+            //     {},
+            // );
+
+            const reduced = mappedData.reduce((acc, obj) => {
+                const { date } = obj;
+                if (!acc[date]) {
+                    acc[date] = { date, data: [obj] };
+                } else {
+                    acc[date].data.push(obj);
+                }
+                return acc;
+            }, {});
+
+            const result = Object.values(reduced);
+            console.log(result);
+
+
+            setItems(reduced);
+        };
+        getData();
+    }, []);
+
+    const renderItem = (item: Item) => {
+        return (
+            <View style={styles.itemContainer}>
+                <Text>{item.Description}</Text>
+                {/* <Text>{toDateString()}</Text> */}
+            </View>
+        )
     }
 
     return (
-        <View style={{ flex: 2 }}>
-            <Agenda
-                items={{
-                    '2023-05-04': [{name: 'item 1 - any js object'}],
-                    '2023-05-05': [{name: 'item 2 - any js object', height: 80}],
-                    '2023-05-06': [],
-                    '2023-05-08': [{name: 'item 3 - any js object'}, {name: 'any js object'}]
-                  }}
-                loadItemsForMonth={month => {
-                console.log('trigger items loading');
-                }}
-                // loadItemsForMonth={loadItems}
-                selected={'2023-05-07'}
-                renderItem={renderItem}
-            />
-        </View>
+        <SafeAreaView style={styles.safe}>
+            <Agenda items={items} renderItem={renderItem} />
+        </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    safe: {
+        flex: 1,
+    },
+    itemContainer: {
+        backgroundColor: 'white',
+        margin: 5,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    },
+});
 
 export default ScheduleScreen;

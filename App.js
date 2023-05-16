@@ -7,7 +7,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Tela } from './Screens/Tela';
 import { Checklist } from './Screens/ChecklistScreen';
-import { Alarm } from './Screens/Alarms';
+import { Alerts } from './Screens/AlertScreen';
+import { ContactsScreen } from './Screens/ContactsScreen';
+import * as Notifications from 'expo-notifications';
 
 export default function App() {
 
@@ -26,6 +28,7 @@ export default function App() {
   require('dayjs/locale/pt');
   dayjs.locale("pt");
 
+  Notifications.cancelAllScheduledNotificationsAsync()
 
   function HomeScreen({ navigation }) {
     return (
@@ -65,12 +68,12 @@ export default function App() {
           </View>
           <View style={styles.row}>
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Alarm')}>
+              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('AlarmScreen')}>
                 <Text style={styles.title}>Alarmes</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('Tela')}>
+              <TouchableOpacity style={styles.LayoutButtonContainer} onPress={() => navigation.navigate('ContactsScreen')}>
                 <Text style={styles.title}>Contatos</Text>
               </TouchableOpacity>
             </View>
@@ -96,7 +99,8 @@ export default function App() {
           <Stack.Screen name="HomeScreen" component={HomeScreen}></Stack.Screen>
           <Stack.Screen name="Tela" component={Tela}></Stack.Screen>
           <Stack.Screen name="Checklist" component={Checklist}></Stack.Screen>
-          <Stack.Screen name="Alarm" component={Alarm}></Stack.Screen>
+          <Stack.Screen name="AlarmScreen" component={Alerts}></Stack.Screen>
+          <Stack.Screen name="ContactsScreen" component={ContactsScreen}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>
